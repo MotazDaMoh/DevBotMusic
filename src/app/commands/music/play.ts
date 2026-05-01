@@ -68,6 +68,7 @@ export const chatInput: ChatInputCommand = async ({ interaction, client }) => {
               `No results found for \`${query}\`.`,
           ),
         ],
+        flags: MessageFlags.IsComponentsV2
       });
       return;
     }
@@ -92,12 +93,14 @@ export const chatInput: ChatInputCommand = async ({ interaction, client }) => {
             }**.`,
           ),
         ],
+        flags: MessageFlags.IsComponentsV2
       });
     } else {
       const [first] = searchResult.tracks;
       if (!first) {
         await interaction.editReply({
           components: [errorContainer(`No results found for \`${query}\`.`)],
+          flags: MessageFlags.IsComponentsV2
         });
         return;
       }
@@ -118,6 +121,7 @@ export const chatInput: ChatInputCommand = async ({ interaction, client }) => {
           components: [
             successContainer('Queued', `**${first.info.title}**`),
           ],
+          flags: MessageFlags.IsComponentsV2
         });
       }
     }
@@ -129,7 +133,10 @@ export const chatInput: ChatInputCommand = async ({ interaction, client }) => {
     console.error('[play] error:', error);
     const message =
       error instanceof Error ? error.message : 'Failed to play.';
-    await interaction.editReply({ components: [errorContainer(message)] });
+    await interaction.editReply({ 
+      components: [errorContainer(message)],
+      flags: MessageFlags.IsComponentsV2
+   });
   }
 };
 
